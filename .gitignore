@@ -1,0 +1,38 @@
+# Virtual environments
+.venv/
+venv/
+ENV/
+env/
+
+# Python cache
+**/__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Node/React
+**/node_modules/
+**/dist/
+**/build/
+.eslintcache
+
+# IDEs & System
+.DS_Store
+.vscode/
+.idea/
+
+# Environment and databases
+.env
+.env.*
+*.db
+*.sqlite
+
+# PDF & MD files
+*.pdf
+*.md
+
+# Fixtures directory
+fixtures/
