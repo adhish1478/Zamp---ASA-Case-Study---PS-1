@@ -90,7 +90,7 @@ def compose_confidence(stage1_results: dict, stage2_results: dict) -> dict:
         extraction_flags.append("missing_invoice_date")
         
     # -------------------------------------------------------------
-    # HEURISTIC 3: Totals reconciliation check (subtotal + tax == total)
+    # HEURISTIC 3: Totals reconciliation check (handles tax-added & tax-included)
     # -------------------------------------------------------------
     items = stage2_results["line_items"]
     items_sum = round(sum(item["amount"] for item in items), 2)
@@ -98,11 +98,15 @@ def compose_confidence(stage1_results: dict, stage2_results: dict) -> dict:
     total = stage2_results["total"]
     
     if total is not None:
-        expected_total = round(items_sum + tax, 2)
-        diff = abs(total - expected_total)
+        # Case A: Tax is added on top of line items subtotal
+        expected_total_added = round(items_sum + tax, 2)
+        diff_added = abs(total - expected_total_added)
         
-        # If the difference is greater than 5 cents, flag it
-        if diff > 0.05:
+        # Case B: Tax is already included in the line items / subtotal
+        diff_included = abs(total - items_sum)
+        
+        # If both checks fail to reconcile within 5 cents, flag it
+        if diff_added > 0.05 and diff_included > 0.05:
             # Drop total and items confidence significantly due to discrepancy
             field_conf["total"] = round(field_conf["total"] * 0.5, 4)
             field_conf["line_items"] = round(field_conf["line_items"] * 0.5, 4)
