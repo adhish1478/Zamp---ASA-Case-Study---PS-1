@@ -210,6 +210,62 @@ export default function App() {
     }
   };
 
+  const handleExportCSV = () => {
+    const targets = filteredInvoices;
+    if (targets.length === 0) {
+      alert("No data available to export.");
+      return;
+    }
+
+    const headers = [
+      "Invoice ID",
+      "Source File",
+      "Vendor Name",
+      "Invoice Number",
+      "Invoice Date",
+      "PO Reference",
+      "Total Amount",
+      "Tax Amount",
+      "Audit Status",
+      "Explanation",
+      "Requires Review"
+    ];
+
+    const escape = (val) => {
+      if (val === null || val === undefined) return "";
+      const str = String(val);
+      if (str.includes(",") || str.includes('"') || str.includes("\n")) {
+        return `"${str.replace(/"/g, '""')}"`;
+      }
+      return str;
+    };
+
+    const rows = targets.map(inv => [
+      escape(inv.invoice_id),
+      escape(inv.source_file),
+      escape(inv.vendor_name),
+      escape(inv.invoice_number),
+      escape(inv.invoice_date),
+      escape(inv.po_reference),
+      inv.total !== null ? inv.total.toFixed(2) : "0.00",
+      inv.tax !== null ? inv.tax.toFixed(2) : "0.00",
+      escape(inv.status),
+      escape(inv.explanation),
+      inv.decision_review ? "Yes" : "No"
+    ]);
+
+    const csvContent = [headers.join(","), ...rows.map(r => r.join(","))].join("\n");
+
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.setAttribute("href", url);
+    link.setAttribute("download", `audit_invoices_${currentView}_${new Date().toISOString().slice(0, 10)}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   // Helper to get formatted error reason for the table list view
   const getDiscrepancyReason = (inv) => {
     if (inv.status === "auto_approved") return null;
@@ -415,7 +471,16 @@ export default function App() {
               {currentView === "suppliers" && "Approved Suppliers Directory"}
             </span>
           </div>
-          <div className="flex items-center gap-6">
+          <div className="flex items-center gap-3">
+            {currentView !== "suppliers" && invoices.length > 0 && (
+              <button
+                onClick={handleExportCSV}
+                className="h-9 px-3 bg-slate-50 hover:bg-slate-100 border border-slate-200 rounded text-xs font-bold text-slate-700 flex items-center gap-1.5 transition-colors cursor-pointer select-none"
+              >
+                <span className="material-symbols-outlined text-sm">download</span>
+                Export CSV
+              </button>
+            )}
             <div className="relative w-72">
               <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-sm">search</span>
               <input
