@@ -15,7 +15,7 @@ export default function App() {
   const [activeBatch, setActiveBatch] = useState(null);
   const [purchaseOrders, setPurchaseOrders] = useState([]);
   const [showAllPos, setShowAllPos] = useState(false);
-  const [sortField, setSortField] = useState("invoice_date");
+  const [sortField, setSortField] = useState("timestamp");
   const [sortDirection, setSortDirection] = useState("desc");
 
   // Form states for editable fields
@@ -313,6 +313,16 @@ export default function App() {
       console.error("Clear database error:", err);
       alert("Failed to clear database.");
     }
+  };
+
+  const formatTimestamp = (ts) => {
+    if (!ts) return "—";
+    const isoStr = ts.replace(" ", "T") + "Z";
+    const date = new Date(isoStr);
+    if (isNaN(date.getTime())) return ts;
+    const timeStr = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    const dateStr = date.toLocaleDateString([], { month: 'short', day: 'numeric' });
+    return `${timeStr}, ${dateStr}`;
   };
 
   // Helper to get formatted error reason for the table list view
@@ -770,6 +780,11 @@ export default function App() {
                               Amount {sortField === "total" && (sortDirection === "asc" ? "▲" : "▼")}
                             </div>
                           </th>
+                          <th onClick={() => requestSort("timestamp")} className="px-3 py-3 border-b border-slate-200 cursor-pointer hover:bg-slate-100 select-none">
+                            <div className="flex items-center gap-1">
+                              Processed {sortField === "timestamp" && (sortDirection === "asc" ? "▲" : "▼")}
+                            </div>
+                          </th>
                           <th onClick={() => requestSort("status")} className="px-3 py-3 border-b border-slate-200 cursor-pointer hover:bg-slate-100 select-none">
                             <div className="flex items-center gap-1">
                               Status {sortField === "status" && (sortDirection === "asc" ? "▲" : "▼")}
@@ -811,6 +826,9 @@ export default function App() {
                               <td className="px-3 py-3 font-numeric-table">{inv.invoice_date || "—"}</td>
                               <td className="px-3 py-3 text-right font-semibold font-numeric-table">
                                 ${inv.total !== null ? inv.total.toFixed(2) : "0.00"}
+                              </td>
+                              <td className="px-3 py-3 font-numeric-table text-xs text-slate-500">
+                                {formatTimestamp(inv.timestamp)}
                               </td>
                               <td className="px-3 py-3">{badge}</td>
                             </tr>
@@ -881,6 +899,11 @@ export default function App() {
                               Amount {sortField === "total" && (sortDirection === "asc" ? "▲" : "▼")}
                             </div>
                           </th>
+                          <th onClick={() => requestSort("timestamp")} className="px-3 py-3 border-b border-slate-200 cursor-pointer hover:bg-slate-100 select-none">
+                            <div className="flex items-center gap-1">
+                              Processed {sortField === "timestamp" && (sortDirection === "asc" ? "▲" : "▼")}
+                            </div>
+                          </th>
                           <th onClick={() => requestSort("status")} className="px-3 py-3 border-b border-slate-200 cursor-pointer hover:bg-slate-100 select-none">
                             <div className="flex items-center gap-1">
                               Status {sortField === "status" && (sortDirection === "asc" ? "▲" : "▼")}
@@ -920,6 +943,9 @@ export default function App() {
                               <td className="px-3 py-3 font-numeric-table">{inv.invoice_date || "—"}</td>
                               <td className="px-3 py-3 text-right font-semibold font-numeric-table">
                                 ${inv.total !== null ? inv.total.toFixed(2) : "0.00"}
+                              </td>
+                              <td className="px-3 py-3 font-numeric-table text-xs text-slate-500">
+                                {formatTimestamp(inv.timestamp)}
                               </td>
                               <td className="px-3 py-3">{badge}</td>
                             </tr>
