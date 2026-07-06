@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 
+const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:8000";
+
 export default function App() {
   const [invoices, setInvoices] = useState([]);
   const [selectedInvoice, setSelectedInvoice] = useState(null);
@@ -26,7 +28,7 @@ export default function App() {
   const fetchInvoices = async (autoSelectId = null) => {
     try {
       setLoading(true);
-      const res = await fetch("http://localhost:8000/api/invoices");
+      const res = await fetch(`${API_BASE}/api/invoices`);
       if (!res.ok) throw new Error("Failed to fetch invoices");
       const data = await res.json();
       setInvoices(data);
@@ -52,7 +54,7 @@ export default function App() {
 
   const fetchPurchaseOrders = async () => {
     try {
-      const res = await fetch("http://localhost:8000/api/pos");
+      const res = await fetch(`${API_BASE}/api/pos`);
       if (!res.ok) throw new Error("Failed to fetch purchase orders");
       const data = await res.json();
       setPurchaseOrders(data);
@@ -63,7 +65,7 @@ export default function App() {
 
   const handleToggleCompliance = async (vendorName, currentApproved) => {
     try {
-      const res = await fetch("http://localhost:8000/api/suppliers/compliance", {
+      const res = await fetch(`${API_BASE}/api/suppliers/compliance`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -109,7 +111,7 @@ export default function App() {
       setUploading(true);
       setActiveBatch({ status: "queued", files: {} });
       
-      const res = await fetch("http://localhost:8000/api/upload", {
+      const res = await fetch(`${API_BASE}/api/upload`, {
         method: "POST",
         body: formData,
       });
@@ -121,7 +123,7 @@ export default function App() {
       await new Promise((resolve, reject) => {
         const interval = setInterval(async () => {
           try {
-            const statusRes = await fetch(`http://localhost:8000/api/upload/status/${batchId}`);
+            const statusRes = await fetch(`${API_BASE}/api/upload/status/${batchId}`);
             if (!statusRes.ok) throw new Error("Failed to retrieve batch status");
             const statusData = await statusRes.json();
             setActiveBatch(statusData);
@@ -195,7 +197,7 @@ export default function App() {
         explanation: explanation
       };
 
-      const res = await fetch(`http://localhost:8000/api/invoices/${selectedInvoice.invoice_id}/review`, {
+      const res = await fetch(`${API_BASE}/api/invoices/${selectedInvoice.invoice_id}/review`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(updateData),
@@ -979,7 +981,7 @@ export default function App() {
                 {showPdf && selectedInvoice.source_file && (
                   <div className="mt-3 w-full h-80 rounded border border-slate-200 overflow-hidden bg-slate-100 relative">
                     <iframe
-                      src={`http://localhost:8000/api/uploads/${selectedInvoice.source_file}`}
+                      src={`${API_BASE}/api/uploads/${selectedInvoice.source_file}`}
                       className="w-full h-full border-none"
                       title="Invoice PDF Viewer"
                     />
