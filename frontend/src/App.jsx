@@ -15,6 +15,8 @@ export default function App() {
   const [activeBatch, setActiveBatch] = useState(null);
   const [purchaseOrders, setPurchaseOrders] = useState([]);
   const [showAllPos, setShowAllPos] = useState(false);
+  const [sortField, setSortField] = useState("invoice_date");
+  const [sortDirection, setSortDirection] = useState("desc");
 
   // Form states for editable fields
   const [editVendor, setEditVendor] = useState("");
@@ -81,6 +83,15 @@ export default function App() {
       console.error("Error toggling compliance:", err);
       alert("Failed to update supplier compliance.");
     }
+  };
+
+  const requestSort = (field) => {
+    let direction = "asc";
+    if (sortField === field && sortDirection === "asc") {
+      direction = "desc";
+    }
+    setSortField(field);
+    setSortDirection(direction);
   };
 
   useEffect(() => {
@@ -213,7 +224,7 @@ export default function App() {
   };
 
   const handleExportCSV = () => {
-    const targets = filteredInvoices;
+    const targets = sortedFilteredInvoices;
     if (targets.length === 0) {
       alert("No data available to export.");
       return;
@@ -266,6 +277,42 @@ export default function App() {
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+  };
+
+  const handleDeleteInvoice = async (invoiceId) => {
+    if (!confirm("Are you sure you want to permanently delete this invoice and its audit details?")) return;
+    try {
+      const res = await fetch(`${API_BASE}/api/invoices/${invoiceId}`, {
+        method: "DELETE"
+      });
+      if (!res.ok) throw new Error("Failed to delete invoice");
+      
+      if (selectedInvoice && selectedInvoice.invoice_id === invoiceId) {
+        setSelectedInvoice(null);
+      }
+      
+      await fetchInvoices();
+    } catch (err) {
+      console.error("Delete invoice error:", err);
+      alert("Failed to delete invoice.");
+    }
+  };
+
+  const handleClearDatabase = async () => {
+    if (!confirm("WARNING: This will permanently delete ALL invoices and reset the database. Are you sure you want to proceed?")) return;
+    try {
+      const res = await fetch(`${API_BASE}/api/invoices/clear`, {
+        method: "POST"
+      });
+      if (!res.ok) throw new Error("Failed to clear database");
+      
+      setSelectedInvoice(null);
+      await fetchInvoices();
+      alert("Database successfully cleared.");
+    } catch (err) {
+      console.error("Clear database error:", err);
+      alert("Failed to clear database.");
+    }
   };
 
   // Helper to get formatted error reason for the table list view
@@ -363,8 +410,29 @@ export default function App() {
     return true;
   });
 
+  const sortedFilteredInvoices = [...filteredInvoices].sort((a, b) => {
+    if (!sortField) return 0;
+    let valA = a[sortField];
+    let valB = b[sortField];
+    
+    if (valA === null || valA === undefined) return 1;
+    if (valB === null || valB === undefined) return -1;
+    
+    if (typeof valA === "string" && typeof valB === "string") {
+      return sortDirection === "asc"
+        ? valA.localeCompare(valB)
+        : valB.localeCompare(valA);
+    } else {
+      if (valA < valB) return sortDirection === "asc" ? -1 : 1;
+      if (valA > valB) return sortDirection === "asc" ? 1 : -1;
+      return 0;
+    }
+  });
+
   // Recent invoices for the Dashboard Overview page
-  const recentInvoices = invoices.slice(0, 3);
+  const recentInvoices = [...invoices]
+    .sort((a, b) => new Date(b.timestamp || 0) - new Date(a.timestamp || 0))
+    .slice(0, 3);
 
   // Switch supplier click -> Invoice log search
   const handleSupplierClick = (supplierName) => {
@@ -475,13 +543,22 @@ export default function App() {
           </div>
           <div className="flex items-center gap-3">
             {currentView !== "suppliers" && invoices.length > 0 && (
-              <button
-                onClick={handleExportCSV}
-                className="h-9 px-3 bg-slate-50 hover:bg-slate-100 border border-slate-200 rounded text-xs font-bold text-slate-700 flex items-center gap-1.5 transition-colors cursor-pointer select-none"
-              >
-                <span className="material-symbols-outlined text-sm">download</span>
-                Export CSV
-              </button>
+              <>
+                <button
+                  onClick={handleExportCSV}
+                  className="h-9 px-3 bg-slate-50 hover:bg-slate-100 border border-slate-200 rounded text-xs font-bold text-slate-700 flex items-center gap-1.5 transition-colors cursor-pointer select-none"
+                >
+                  <span className="material-symbols-outlined text-sm">download</span>
+                  Export CSV
+                </button>
+                <button
+                  onClick={handleClearDatabase}
+                  className="h-9 px-3 bg-rose-50 hover:bg-rose-100 border border-rose-200 rounded text-xs font-bold text-rose-700 flex items-center gap-1.5 transition-colors cursor-pointer select-none"
+                >
+                  <span className="material-symbols-outlined text-sm">delete_sweep</span>
+                  Clear Database
+                </button>
+              </>
             )}
             <div className="relative w-72">
               <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-sm">search</span>
@@ -683,7 +760,7 @@ export default function App() {
                     <div className="flex items-center justify-center p-8">
                       <span className="material-symbols-outlined text-primary text-[32px] animate-spin">sync</span>
                     </div>
-                  ) : filteredInvoices.length === 0 ? (
+                  ) : sortedFilteredInvoices.length === 0 ? (
                     <div className="p-8 text-center text-slate-400">
                       <span className="material-symbols-outlined text-[40px] mb-2">inbox</span>
                       <p>No invoices matched search/filter tags.</p>
@@ -692,15 +769,35 @@ export default function App() {
                     <table className="w-full text-left">
                       <thead className="sticky top-0 z-10 bg-slate-50">
                         <tr className="text-label-md text-slate-500 uppercase tracking-tight">
-                          <th className="px-3 py-3 border-b border-slate-200">Vendor</th>
-                          <th className="px-3 py-3 border-b border-slate-200">Invoice ID</th>
-                          <th className="px-3 py-3 border-b border-slate-200">Date</th>
-                          <th className="px-3 py-3 border-b border-slate-200 text-right">Amount</th>
-                          <th className="px-3 py-3 border-b border-slate-200">Status</th>
+                          <th onClick={() => requestSort("vendor_name")} className="px-3 py-3 border-b border-slate-200 cursor-pointer hover:bg-slate-100 select-none">
+                            <div className="flex items-center gap-1">
+                              Vendor {sortField === "vendor_name" && (sortDirection === "asc" ? "▲" : "▼")}
+                            </div>
+                          </th>
+                          <th onClick={() => requestSort("invoice_id")} className="px-3 py-3 border-b border-slate-200 cursor-pointer hover:bg-slate-100 select-none">
+                            <div className="flex items-center gap-1">
+                              Invoice ID {sortField === "invoice_id" && (sortDirection === "asc" ? "▲" : "▼")}
+                            </div>
+                          </th>
+                          <th onClick={() => requestSort("invoice_date")} className="px-3 py-3 border-b border-slate-200 cursor-pointer hover:bg-slate-100 select-none">
+                            <div className="flex items-center gap-1">
+                              Date {sortField === "invoice_date" && (sortDirection === "asc" ? "▲" : "▼")}
+                            </div>
+                          </th>
+                          <th onClick={() => requestSort("total")} className="px-3 py-3 border-b border-slate-200 cursor-pointer hover:bg-slate-100 select-none text-right">
+                            <div className="flex items-center justify-end gap-1">
+                              Amount {sortField === "total" && (sortDirection === "asc" ? "▲" : "▼")}
+                            </div>
+                          </th>
+                          <th onClick={() => requestSort("status")} className="px-3 py-3 border-b border-slate-200 cursor-pointer hover:bg-slate-100 select-none">
+                            <div className="flex items-center gap-1">
+                              Status {sortField === "status" && (sortDirection === "asc" ? "▲" : "▼")}
+                            </div>
+                          </th>
                         </tr>
                       </thead>
                       <tbody className="text-body-sm text-slate-700 divide-y divide-slate-100 bg-white">
-                        {filteredInvoices.map((inv) => {
+                        {sortedFilteredInvoices.map((inv) => {
                           const isSelected = selectedInvoice && selectedInvoice.invoice_id === inv.invoice_id;
                           const discrepancy = getDiscrepancyReason(inv);
                           
@@ -775,7 +872,7 @@ export default function App() {
 
                 {/* Exception List Table */}
                 <div className="flex-1 overflow-y-auto custom-scrollbar border border-slate-200 rounded-lg bg-white">
-                  {filteredInvoices.length === 0 ? (
+                  {sortedFilteredInvoices.length === 0 ? (
                     <div className="p-8 text-center text-slate-400">
                       <span className="material-symbols-outlined text-[40px] mb-2 text-emerald-500">task_alt</span>
                       <p className="font-semibold text-slate-800">Clean Sheet! No Exceptions</p>
@@ -785,15 +882,35 @@ export default function App() {
                     <table className="w-full text-left">
                       <thead className="sticky top-0 z-10 bg-slate-50">
                         <tr className="text-label-md text-slate-500 uppercase tracking-tight">
-                          <th className="px-3 py-3 border-b border-slate-200">Vendor</th>
-                          <th className="px-3 py-3 border-b border-slate-200">Invoice ID</th>
-                          <th className="px-3 py-3 border-b border-slate-200">Date</th>
-                          <th className="px-3 py-3 border-b border-slate-200 text-right">Amount</th>
-                          <th className="px-3 py-3 border-b border-slate-200">Status</th>
+                          <th onClick={() => requestSort("vendor_name")} className="px-3 py-3 border-b border-slate-200 cursor-pointer hover:bg-slate-100 select-none">
+                            <div className="flex items-center gap-1">
+                              Vendor {sortField === "vendor_name" && (sortDirection === "asc" ? "▲" : "▼")}
+                            </div>
+                          </th>
+                          <th onClick={() => requestSort("invoice_id")} className="px-3 py-3 border-b border-slate-200 cursor-pointer hover:bg-slate-100 select-none">
+                            <div className="flex items-center gap-1">
+                              Invoice ID {sortField === "invoice_id" && (sortDirection === "asc" ? "▲" : "▼")}
+                            </div>
+                          </th>
+                          <th onClick={() => requestSort("invoice_date")} className="px-3 py-3 border-b border-slate-200 cursor-pointer hover:bg-slate-100 select-none">
+                            <div className="flex items-center gap-1">
+                              Date {sortField === "invoice_date" && (sortDirection === "asc" ? "▲" : "▼")}
+                            </div>
+                          </th>
+                          <th onClick={() => requestSort("total")} className="px-3 py-3 border-b border-slate-200 cursor-pointer hover:bg-slate-100 select-none text-right">
+                            <div className="flex items-center justify-end gap-1">
+                              Amount {sortField === "total" && (sortDirection === "asc" ? "▲" : "▼")}
+                            </div>
+                          </th>
+                          <th onClick={() => requestSort("status")} className="px-3 py-3 border-b border-slate-200 cursor-pointer hover:bg-slate-100 select-none">
+                            <div className="flex items-center gap-1">
+                              Status {sortField === "status" && (sortDirection === "asc" ? "▲" : "▼")}
+                            </div>
+                          </th>
                         </tr>
                       </thead>
                       <tbody className="text-body-sm text-slate-700 divide-y divide-slate-100 bg-white">
-                        {filteredInvoices.map((inv) => {
+                        {sortedFilteredInvoices.map((inv) => {
                           const isSelected = selectedInvoice && selectedInvoice.invoice_id === inv.invoice_id;
                           const discrepancy = getDiscrepancyReason(inv);
                           
@@ -944,13 +1061,23 @@ export default function App() {
 
               {/* Header Details Panel */}
               <div className="p-6 bg-white border-b border-slate-200 relative">
-                <button
-                  onClick={() => setSelectedInvoice(null)}
-                  className="absolute right-4 top-4 p-1 text-slate-400 hover:text-slate-600 rounded-full hover:bg-slate-100"
-                >
-                  <span className="material-symbols-outlined text-lg">close</span>
-                </button>
-                <h2 className="text-headline-md font-bold text-slate-900 truncate pr-6">
+                <div className="absolute right-4 top-4 flex items-center gap-1">
+                  <button
+                    onClick={() => handleDeleteInvoice(selectedInvoice.invoice_id)}
+                    className="p-1 text-slate-400 hover:text-rose-600 rounded-full hover:bg-rose-50 transition-colors"
+                    title="Delete Invoice"
+                  >
+                    <span className="material-symbols-outlined text-lg">delete</span>
+                  </button>
+                  <button
+                    onClick={() => setSelectedInvoice(null)}
+                    className="p-1 text-slate-400 hover:text-slate-600 rounded-full hover:bg-slate-100 transition-colors"
+                    title="Close"
+                  >
+                    <span className="material-symbols-outlined text-lg">close</span>
+                  </button>
+                </div>
+                <h2 className="text-headline-md font-bold text-slate-900 truncate pr-16">
                   {selectedInvoice.vendor_name || "Unknown Vendor"}
                 </h2>
                 <div className="flex justify-between items-baseline mt-1">

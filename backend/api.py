@@ -505,6 +505,67 @@ def update_supplier_compliance(request: ComplianceRequest):
     finally:
         conn.close()
 
+@app.delete("/api/invoices/{invoice_id}")
+def delete_single_invoice(invoice_id: str):
+    """
+    Deletes an invoice and its matched decision, and removes its physical PDF file.
+    """
+    conn = sqlite3.connect(DB_PATH)
+    cursor = conn.cursor()
+    try:
+        # Retrieve the source_file path before deleting the database row
+        cursor.execute("SELECT source_file FROM invoices WHERE invoice_id = ?", (invoice_id,))
+        row = cursor.fetchone()
+        
+        # Delete from DB
+        cursor.execute("DELETE FROM invoices WHERE invoice_id = ?", (invoice_id,))
+        cursor.execute("DELETE FROM invoice_decisions WHERE invoice_id = ?", (invoice_id,))
+        conn.commit()
+        
+        # Remove physical file if it exists
+        if row and row[0]:
+            file_path = os.path.join(UPLOAD_DIR, row[0])
+            if os.path.exists(file_path):
+                os.remove(file_path)
+                
+        return {"success": True, "deleted_id": invoice_id}
+    except Exception as e:
+        conn.rollback()
+        raise HTTPException(status_code=500, detail=str(e))
+    finally:
+        conn.close()
+
+@app.post("/api/invoices/clear")
+def clear_all_invoices():
+    """
+    Wipes the database tables for invoices and invoice decisions, and clears the uploads folder.
+    """
+    conn = sqlite3.connect(DB_PATH)
+    cursor = conn.cursor()
+    try:
+        cursor.execute("DELETE FROM invoices")
+        cursor.execute("DELETE FROM invoice_decisions")
+        conn.commit()
+        
+        # Clear uploads folder contents
+        for filename in os.listdir(UPLOAD_DIR):
+            file_path = os.path.join(UPLOAD_DIR, filename)
+            try:
+                if os.path.isfile(file_path) or os.path.islink(file_path):
+                    os.unlink(file_path)
+                elif os.path.isdir(file_path):
+                    shutil.rmtree(file_path)
+            except Exception as e:
+                print(f"Failed to delete {file_path}. Reason: {e}")
+                
+        return {"success": True, "message": "All invoices cleared"}
+    except Exception as e:
+        conn.rollback()
+        raise HTTPException(status_code=500, detail=str(e))
+    finally:
+        conn.close()
+
+
 if __name__ == "__main__":
     import uvicorn
     # Start server on 0.0.0.0:8000
