@@ -1044,6 +1044,7 @@ export default function App() {
                     <div>
                       <p className="font-bold text-label-md uppercase">
                         Audit Violation: {
+                          selectedInvoice.rule_trace?.includes("low_confidence_review_override") ? "SCAN_QUALITY_ERROR" :
                           selectedInvoice.rule_trace?.includes("duplicate_invoice_detected") ? "DUPLICATE_INVOICE_ERROR" :
                           selectedInvoice.rule_trace?.includes("no_matching_po_number") ? "PO_MISMATCH_ERROR" :
                           selectedInvoice.rule_trace?.includes("unapproved_vendor") ? "UNAPPROVED_VENDOR_ERROR" :

@@ -232,6 +232,10 @@ def generate_explanation(invoice_data: dict, po_data: dict or None, status: str,
     """
     Generates a plain-English explanation of the decision using OpenAI gpt-4o-mini.
     """
+    if "low_confidence_review_override" in rule_trace:
+        vendor = invoice_data.get("vendor_name") or "Unknown Vendor"
+        return f"The invoice from {vendor} was flagged for manual review because of a low OCR scan confidence score."
+
     openai_client = get_openai_client()
     
     system_prompt = (

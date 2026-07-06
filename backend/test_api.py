@@ -126,5 +126,30 @@ class TestInvoiceAPI(unittest.TestCase):
         self.assertEqual(explanation, "Manually verified by auditor during API testing.")
         self.assertEqual(review, 0)
 
+    def test_delete_endpoint(self):
+        """Assert DELETE /api/invoices/{invoice_id} successfully deletes invoice from database"""
+        response = self.client.get("/api/invoices")
+        invoices = response.json()
+        if len(invoices) == 0:
+            # Seed an invoice by running upload first
+            self.test_upload_endpoint()
+            response = self.client.get("/api/invoices")
+            invoices = response.json()
+            
+        target_inv = invoices[0]
+        inv_id = target_inv["invoice_id"]
+        
+        resp = self.client.delete(f"/api/invoices/{inv_id}")
+        self.assertEqual(resp.status_code, 200)
+        self.assertTrue(resp.json()["success"])
+        self.assertEqual(resp.json()["deleted_id"], inv_id)
+        
+        conn = sqlite3.connect(DB_PATH)
+        cursor = conn.cursor()
+        cursor.execute("SELECT count(*) FROM invoices WHERE invoice_id = ?", (inv_id,))
+        count = cursor.fetchone()[0]
+        conn.close()
+        self.assertEqual(count, 0)
+
 if __name__ == "__main__":
     unittest.main()
