@@ -88,10 +88,20 @@ def match_invoice_to_po(invoice_id: str) -> dict:
     # PRE-RULE: OCR / Extraction Low-Confidence Review Override
     # -------------------------------------------------------------
     # If Stage 2 flagged this invoice as requiring human review,
-    # we force it to be flagged for review in decision output.
+    # we force it to be flagged for review in decision output immediately
+    # to avoid running matching rules on corrupt OCR values.
     if stage2_review:
         status = "flagged_for_review"
         rule_trace.append("low_confidence_review_override")
+        conn.close()
+        return {
+            "status": status,
+            "matched_po_id": None,
+            "rule_trace": rule_trace,
+            "requires_human_review": True,
+            "invoice_data": invoice,
+            "po_data": None
+        }
     
     # -------------------------------------------------------------
     # RULE 1: Duplicate Detection Check
@@ -116,30 +126,26 @@ def match_invoice_to_po(invoice_id: str) -> dict:
         }
         
     # -------------------------------------------------------------
-    # RULE 2: PO Reference Number Check
+    # RULE 2: PO Reference Number Check & Retrieval
     # -------------------------------------------------------------
-    if not po_reference:
-        status = "flagged_for_review"
-        rule_trace.append("missing_po_reference")
-        conn.close()
-        return {
-            "status": status,
-            "matched_po_id": None,
-            "rule_trace": rule_trace,
-            "requires_human_review": True,
-            "invoice_data": invoice,
-            "po_data": None
-        }
+    po_row = None
+    if po_reference:
+        cursor.execute("SELECT * FROM pos WHERE po_id = ?", (po_reference,))
+        po_row = cursor.fetchone()
         
-    # -------------------------------------------------------------
-    # RULE 3: Retrieve Purchase Order
-    # -------------------------------------------------------------
-    cursor.execute("SELECT * FROM pos WHERE po_id = ?", (po_reference,))
-    po_row = cursor.fetchone()
-    
-    if not po_row:
+    if not po_reference or not po_row:
         status = "flagged_for_review"
-        rule_trace.append("po_not_found")
+        rule_trace.append("no_matching_po_number")
+        
+        # Fallback vendor validation: check if this vendor has any unapproved POs in the pos table
+        norm_inv_vendor = normalize_vendor(vendor_name)
+        cursor.execute("SELECT DISTINCT vendor_name, approved_vendor FROM pos")
+        for row in cursor.fetchall():
+            po_vendor_name, approved_vendor = row
+            if normalize_vendor(po_vendor_name) == norm_inv_vendor and approved_vendor == 0:
+                rule_trace.append("unapproved_vendor")
+                break
+            
         conn.close()
         return {
             "status": status,

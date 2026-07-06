@@ -37,14 +37,15 @@ def init_db():
     cursor.execute("PRAGMA table_info(invoices)")
     cols = [col[1] for col in cursor.fetchall()]
     
-    if cols and "vendor_name" not in cols:
-        print("Old SQLite schema detected. Dropping table to migrate to Stage 2 schema...")
+    if cols and ("vendor_name" not in cols or "file_hash" not in cols):
+        print("Old SQLite schema detected. Dropping table to migrate to file_hash schema...")
         cursor.execute("DROP TABLE invoices")
         
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS invoices (
             invoice_id TEXT PRIMARY KEY,
             source_file TEXT NOT NULL,
+            file_hash TEXT,
             raw_text TEXT NOT NULL,
             source_type TEXT NOT NULL,
             ocr_confidence REAL NOT NULL,
@@ -110,20 +111,21 @@ def init_db():
     conn.commit()
     conn.close()
 
-def save_invoice_to_db(invoice_id, source_file, stage1, stage2, confidence):
+def save_invoice_to_db(invoice_id, source_file, stage1, stage2, confidence, file_hash=None):
     conn = get_db_connection()
     cursor = conn.cursor()
     cursor.execute("""
         INSERT OR REPLACE INTO invoices 
         (
-            invoice_id, source_file, raw_text, source_type, ocr_confidence, page_count,
+            invoice_id, source_file, file_hash, raw_text, source_type, ocr_confidence, page_count,
             vendor_name, invoice_number, invoice_date, po_reference, total, tax, line_items,
             composite_confidence, confidence_details, extraction_flags, requires_human_review
         )
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     """, (
         invoice_id,
         source_file,
+        file_hash,
         stage1["raw_text"],
         stage1["source_type"],
         stage1["ocr_confidence"],
@@ -143,7 +145,7 @@ def save_invoice_to_db(invoice_id, source_file, stage1, stage2, confidence):
     conn.commit()
     conn.close()
 
-def process_single_file(pdf_path):
+def process_single_file(pdf_path, file_hash=None):
     filename = os.path.basename(pdf_path)
     invoice_id = os.path.splitext(filename)[0]
     
@@ -163,7 +165,7 @@ def process_single_file(pdf_path):
         confidence = compose_confidence(stage1, stage2)
         
         # 4. Save fully structured output to SQLite
-        save_invoice_to_db(invoice_id, filename, stage1, stage2, confidence)
+        save_invoice_to_db(invoice_id, filename, stage1, stage2, confidence, file_hash=file_hash)
         
         # 5. Run Stage 3: PO Matching & Explanation
         decision = run_matching_on_invoice(invoice_id)
