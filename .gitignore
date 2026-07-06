@@ -37,3 +37,8 @@ htmlcov/
 
 # Allow tracking all files inside fixtures directory
 !fixtures/**
+
+# Private keys and secrets
+*.key
+*.pem
+*.pub
