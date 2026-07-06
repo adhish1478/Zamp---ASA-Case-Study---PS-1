@@ -1,0 +1,31 @@
+{
+  "invoice_id": "inv_100034",
+  "vendor_name": "Global Telecom Services",
+  "invoice_number": "INV-2026-100034",
+  "invoice_date": "2026-01-20",
+  "po_reference": "PO-2026-200034",
+  "line_items": [
+    {
+      "description": "VoIP Phone Lines (5 Extension Bundle)",
+      "qty": 3,
+      "unit_price": 75.0,
+      "amount": 225.0
+    }
+  ],
+  "tax": 18.56,
+  "total": 243.56,
+  "confidence": {
+    "overall": 1.0,
+    "fields": {
+      "invoice_number": 1.0,
+      "total": 1.0,
+      "vendor_name": 1.0,
+      "invoice_date": 1.0,
+      "po_reference": 1.0,
+      "line_items": 1.0,
+      "tax": 1.0
+    }
+  },
+  "source_file": "inv_100034.pdf",
+  "extraction_flags": []
+}

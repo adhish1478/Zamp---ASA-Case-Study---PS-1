@@ -1,0 +1,31 @@
+{
+  "invoice_id": "inv_100051",
+  "vendor_name": "Vivid Design Lab",
+  "invoice_number": "INV-2026-100051",
+  "invoice_date": "2026-06-08",
+  "po_reference": "PO-2026-200051",
+  "line_items": [
+    {
+      "description": "User Testing Moderation & Recruiting",
+      "qty": 6.7,
+      "unit_price": 950.0,
+      "amount": 6365.0
+    }
+  ],
+  "tax": 525.11,
+  "total": 6890.11,
+  "confidence": {
+    "overall": 1.0,
+    "fields": {
+      "invoice_number": 1.0,
+      "total": 1.0,
+      "vendor_name": 1.0,
+      "invoice_date": 1.0,
+      "po_reference": 1.0,
+      "line_items": 1.0,
+      "tax": 1.0
+    }
+  },
+  "source_file": "inv_100051.pdf",
+  "extraction_flags": []
+}

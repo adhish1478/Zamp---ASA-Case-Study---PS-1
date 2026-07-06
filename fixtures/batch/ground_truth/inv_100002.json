@@ -1,0 +1,31 @@
+{
+  "invoice_id": "inv_100002",
+  "vendor_name": "Quantum Tech Wholesalers",
+  "invoice_number": "INV-2026-100002",
+  "invoice_date": "2026-01-25",
+  "po_reference": "PO-2026-200002",
+  "line_items": [
+    {
+      "description": "Wireless Keyboard and Mouse Combo",
+      "qty": 8,
+      "unit_price": 39.5,
+      "amount": 316.0
+    }
+  ],
+  "tax": 26.07,
+  "total": 316.0,
+  "confidence": {
+    "overall": 1.0,
+    "fields": {
+      "invoice_number": 1.0,
+      "total": 1.0,
+      "vendor_name": 1.0,
+      "invoice_date": 1.0,
+      "po_reference": 1.0,
+      "line_items": 1.0,
+      "tax": 1.0
+    }
+  },
+  "source_file": "inv_100002.pdf",
+  "extraction_flags": []
+}

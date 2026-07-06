@@ -1,0 +1,43 @@
+{
+  "invoice_id": "inv_100014",
+  "vendor_name": "Quantum Tech Wholesalers",
+  "invoice_number": "INV-2026-100014",
+  "invoice_date": "2026-03-26",
+  "po_reference": "PO-2026-200014",
+  "line_items": [
+    {
+      "description": "Standard HDMI Cables 6ft (Pack of 10)",
+      "qty": 15,
+      "unit_price": 45.0,
+      "amount": 675.0
+    },
+    {
+      "description": "Wireless Keyboard and Mouse Combo",
+      "qty": 16,
+      "unit_price": 39.5,
+      "amount": 632.0
+    },
+    {
+      "description": "Gigabit Ethernet Switch 8-Port",
+      "qty": 11,
+      "unit_price": 55.0,
+      "amount": 605.0
+    }
+  ],
+  "tax": 157.74,
+  "total": 1912.0,
+  "confidence": {
+    "overall": 1.0,
+    "fields": {
+      "invoice_number": 1.0,
+      "total": 1.0,
+      "vendor_name": 1.0,
+      "invoice_date": 1.0,
+      "po_reference": 1.0,
+      "line_items": 1.0,
+      "tax": 1.0
+    }
+  },
+  "source_file": "inv_100014.pdf",
+  "extraction_flags": []
+}

@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Utility Invoice {{ invoice_number }}</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500;700&family=Ubuntu:wght@400;500;700&display=swap');
+        @page {
+            size: A4;
+            margin: 0;
+        }
+        body {
+            font-family: 'Ubuntu', sans-serif;
+            color: #2b2d42;
+            margin: 0;
+            padding: 0;
+            font-size: 13px;
+            line-height: 1.4;
+        }
+        .banner {
+            background-color: #ef233c;
+            color: white;
+            padding: 25px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .banner h1 {
+            margin: 0;
+            font-size: 28px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .banner .meta-box {
+            text-align: right;
+            font-family: 'Roboto Mono', monospace;
+            font-size: 14px;
+        }
+        .main-content {
+            padding: 40px;
+        }
+        .address-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            margin-bottom: 35px;
+        }
+        .address-box h3 {
+            font-size: 12px;
+            color: #ef233c;
+            text-transform: uppercase;
+            margin-top: 0;
+            margin-bottom: 10px;
+            border-bottom: 2px solid #ef233c;
+            padding-bottom: 5px;
+            font-weight: 700;
+        }
+        .address-box p {
+            margin: 4px 0;
+        }
+        .po-highlight {
+            background-color: #f4f5f7;
+            border-left: 4px solid #ef233c;
+            padding: 12px 20px;
+            margin-bottom: 30px;
+            font-family: 'Roboto Mono', monospace;
+            font-size: 13px;
+        }
+        .services-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+        }
+        .services-table th {
+            background-color: #2b2d42;
+            color: white;
+            text-align: left;
+            padding: 10px 12px;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .services-table td {
+            padding: 12px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .services-table td.num, .services-table th.num {
+            text-align: right;
+            font-family: 'Roboto Mono', monospace;
+        }
+        .calculation-section {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 40px;
+            margin-top: 20px;
+        }
+        .payment-info {
+            font-size: 11px;
+            color: #8d99ae;
+            line-height: 1.6;
+        }
+        .billing-breakdown {
+            background-color: #f8f9fa;
+            border: 1px solid #e9ecef;
+            padding: 15px;
+        }
+        .calc-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 6px 0;
+            font-family: 'Roboto Mono', monospace;
+        }
+        .calc-row.grand-total {
+            font-size: 16px;
+            font-weight: 700;
+            border-top: 2px solid #ef233c;
+            color: #ef233c;
+            padding-top: 12px;
+            margin-top: 8px;
+        }
+        .footer {
+            margin-top: 60px;
+            text-align: center;
+            font-size: 11px;
+            color: #8d99ae;
+            border-top: 1px solid #edf2f7;
+            padding-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="banner">
+        <div>
+            <h1>{{ vendor_name }}</h1>
+            <span style="font-size: 13px; opacity: 0.9;">Utility & Telecom Services</span>
+        </div>
+        <div class="meta-box">
+            <div>Invoice: #{{ invoice_number }}</div>
+            <div>Date: {{ invoice_date }}</div>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="address-row">
+            <div class="address-box">
+                <h3>Service Provider</h3>
+                <p><strong>{{ vendor_name }}</strong></p>
+                <p>{{ vendor_address }}</p>
+                <p>Support Email: {{ vendor_email }}</p>
+            </div>
+            <div class="address-box">
+                <h3>Account holder</h3>
+                <p><strong>{{ client_name }}</strong></p>
+                <p>{{ client_address }}</p>
+            </div>
+        </div>
+
+        <div class="po-highlight">
+            PURCHASE ORDER CORRELATION ID: <strong>{{ po_reference if po_reference else 'NONE_PROVIDED' }}</strong>
+        </div>
+
+        <table class="services-table">
+            <thead>
+                <tr>
+                    <th>Service / Item Description</th>
+                    <th class="num" style="width: 80px;">Units</th>
+                    <th class="num" style="width: 100px;">Rate</th>
+                    <th class="num" style="width: 120px;">Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in line_items %}
+                <tr>
+                    <td>{{ item.description }}</td>
+                    <td class="num">{{ item.qty }}</td>
+                    <td class="num">${{ "{:,.2f}".format(item.unit_price) }}</td>
+                    <td class="num">${{ "{:,.2f}".format(item.amount) }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="calculation-section">
+            <div class="payment-info">
+                <strong>PAYMENT NOTICE:</strong><br>
+                Payment is due within 15 days of invoice generation. Late payments are subject to a 1.5% compounding monthly surcharge. Payments can be completed online or via wire transfer.
+            </div>
+            <div class="billing-breakdown">
+                <div class="calc-row">
+                    <span>Subtotal:</span>
+                    <span>${{ "{:,.2f}".format(total - (tax if tax else 0.0)) }}</span>
+                </div>
+                {% if tax is not none and tax > 0 %}
+                <div class="calc-row">
+                    <span>Tax (GST/HST):</span>
+                    <span>${{ "{:,.2f}".format(tax) }}</span>
+                </div>
+                {% endif %}
+                <div class="calc-row grand-total">
+                    <span>TOTAL AMOUNT:</span>
+                    <span>${{ "{:,.2f}".format(total) }}</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            Thank you for choosing {{ vendor_name }} as your service provider. This is an automatically generated document.
+        </div>
+    </div>
+</body>
+</html>

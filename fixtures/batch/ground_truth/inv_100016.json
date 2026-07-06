@@ -1,0 +1,37 @@
+{
+  "invoice_id": "inv_100016",
+  "vendor_name": "Global Telecom Services",
+  "invoice_number": "INV-2026-100016",
+  "invoice_date": "2026-02-01",
+  "po_reference": "PO-2026-200016",
+  "line_items": [
+    {
+      "description": "VoIP Phone Lines (5 Extension Bundle)",
+      "qty": 9,
+      "unit_price": 75.0,
+      "amount": 675.0
+    },
+    {
+      "description": "High-Speed Fiber Optic Internet 1Gbps",
+      "qty": 19,
+      "unit_price": 189.0,
+      "amount": 3591.0
+    }
+  ],
+  "tax": 351.94,
+  "total": 4617.94,
+  "confidence": {
+    "overall": 1.0,
+    "fields": {
+      "invoice_number": 1.0,
+      "total": 1.0,
+      "vendor_name": 1.0,
+      "invoice_date": 1.0,
+      "po_reference": 1.0,
+      "line_items": 1.0,
+      "tax": 1.0
+    }
+  },
+  "source_file": "inv_100016.pdf",
+  "extraction_flags": []
+}

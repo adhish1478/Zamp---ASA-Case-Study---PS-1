@@ -1,0 +1,37 @@
+{
+  "invoice_id": "inv_100084",
+  "vendor_name": "Nova Cloud Systems Inc.",
+  "invoice_number": "INV-2026-100084",
+  "invoice_date": "2026-03-14",
+  "po_reference": "PO-2026-200084",
+  "line_items": [
+    {
+      "description": "Data Warehousing Query Credits",
+      "qty": 7,
+      "unit_price": 0.15,
+      "amount": 1.05
+    },
+    {
+      "description": "Cloud Server Compute (m5.xlarge) - US East",
+      "qty": 20,
+      "unit_price": 120.0,
+      "amount": 2400.0
+    }
+  ],
+  "tax": 198.09,
+  "total": 2599.14,
+  "confidence": {
+    "overall": 1.0,
+    "fields": {
+      "invoice_number": 1.0,
+      "total": 1.0,
+      "vendor_name": 1.0,
+      "invoice_date": 1.0,
+      "po_reference": 1.0,
+      "line_items": 1.0,
+      "tax": 1.0
+    }
+  },
+  "source_file": "inv_100084.pdf",
+  "extraction_flags": []
+}

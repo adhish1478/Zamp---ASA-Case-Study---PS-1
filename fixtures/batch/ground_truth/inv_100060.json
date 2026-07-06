@@ -1,0 +1,49 @@
+{
+  "invoice_id": "inv_100060",
+  "vendor_name": "Nova Cloud Systems Inc.",
+  "invoice_number": "INV-2026-100060",
+  "invoice_date": "2026-07-01",
+  "po_reference": "PO-2026-200060",
+  "line_items": [
+    {
+      "description": "SSL Certificate Multi-Domain Renewal",
+      "qty": 8,
+      "unit_price": 89.99,
+      "amount": 719.92
+    },
+    {
+      "description": "Premium Support Plan (Monthly)",
+      "qty": 18,
+      "unit_price": 499.0,
+      "amount": 8982.0
+    },
+    {
+      "description": "Database Storage Backup Service",
+      "qty": 6,
+      "unit_price": 45.5,
+      "amount": 273.0
+    },
+    {
+      "description": "API Integration Gateway License",
+      "qty": 20,
+      "unit_price": 250.0,
+      "amount": 5000.0
+    }
+  ],
+  "tax": 1235.43,
+  "total": 16210.35,
+  "confidence": {
+    "overall": 1.0,
+    "fields": {
+      "invoice_number": 1.0,
+      "total": 1.0,
+      "vendor_name": 1.0,
+      "invoice_date": 1.0,
+      "po_reference": 1.0,
+      "line_items": 1.0,
+      "tax": 1.0
+    }
+  },
+  "source_file": "inv_100060.pdf",
+  "extraction_flags": []
+}

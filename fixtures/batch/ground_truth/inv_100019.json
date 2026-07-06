@@ -1,0 +1,43 @@
+{
+  "invoice_id": "inv_100019",
+  "vendor_name": "Apex Office Solutions Ltd.",
+  "invoice_number": "INV-2026-100019",
+  "invoice_date": "2026-03-18",
+  "po_reference": "PO-2026-200019",
+  "line_items": [
+    {
+      "description": "Ergonomic Mesh Task Chairs",
+      "qty": 9,
+      "unit_price": 185.0,
+      "amount": 1665.0
+    },
+    {
+      "description": "LED Flat Panel Desk Lamps",
+      "qty": 17,
+      "unit_price": 42.5,
+      "amount": 722.5
+    },
+    {
+      "description": "Office Stationery and Paper Supplies",
+      "qty": 8,
+      "unit_price": 35.0,
+      "amount": 280.0
+    }
+  ],
+  "tax": 220.07,
+  "total": 2887.57,
+  "confidence": {
+    "overall": 1.0,
+    "fields": {
+      "invoice_number": 1.0,
+      "total": 1.0,
+      "vendor_name": 1.0,
+      "invoice_date": 1.0,
+      "po_reference": 1.0,
+      "line_items": 1.0,
+      "tax": 1.0
+    }
+  },
+  "source_file": "inv_100019.pdf",
+  "extraction_flags": []
+}

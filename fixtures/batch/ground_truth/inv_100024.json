@@ -1,0 +1,37 @@
+{
+  "invoice_id": "inv_100024",
+  "vendor_name": "Nova Cloud Systems Inc.",
+  "invoice_number": "INV-2026-100024",
+  "invoice_date": "2026-04-27",
+  "po_reference": "PO-2026-200024",
+  "line_items": [
+    {
+      "description": "Database Storage Backup Service",
+      "qty": 19,
+      "unit_price": 45.5,
+      "amount": 864.5
+    },
+    {
+      "description": "SSL Certificate Multi-Domain Renewal",
+      "qty": 13,
+      "unit_price": 89.99,
+      "amount": 1169.87
+    }
+  ],
+  "tax": 167.84,
+  "total": 2202.21,
+  "confidence": {
+    "overall": 1.0,
+    "fields": {
+      "invoice_number": 1.0,
+      "total": 1.0,
+      "vendor_name": 1.0,
+      "invoice_date": 1.0,
+      "po_reference": 1.0,
+      "line_items": 1.0,
+      "tax": 1.0
+    }
+  },
+  "source_file": "inv_100024.pdf",
+  "extraction_flags": []
+}

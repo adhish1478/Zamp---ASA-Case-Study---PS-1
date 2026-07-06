@@ -1,0 +1,41 @@
+{
+  "invoice_id": "inv_100000",
+  "vendor_name": "Nova Cloud Systems Inc.",
+  "invoice_number": "INV-2026-100000",
+  "invoice_date": "2026-03-02",
+  "po_reference": null,
+  "line_items": [
+    {
+      "description": "Database Storage Backup Service",
+      "qty": 15,
+      "unit_price": 45.5,
+      "amount": 682.5
+    },
+    {
+      "description": "Premium Support Plan (Monthly)",
+      "qty": 17,
+      "unit_price": 499.0,
+      "amount": 8483.0
+    }
+  ],
+  "tax": 756.15,
+  "total": 9921.65,
+  "confidence": {
+    "overall": 0.55,
+    "fields": {
+      "invoice_number": 1.0,
+      "total": 0.35,
+      "vendor_name": 1.0,
+      "invoice_date": 1.0,
+      "po_reference": 1.0,
+      "line_items": 1.0,
+      "tax": 0.45
+    }
+  },
+  "source_file": "ocr_bad_scan.pdf",
+  "extraction_flags": [
+    "total_amount_partially_obscured",
+    "scanned_document",
+    "low_ocr_confidence_region"
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "invoice_id": "inv_100074",
+  "vendor_name": "Quantum Tech Wholesalers",
+  "invoice_number": "INV-2026-100074",
+  "invoice_date": "2026-02-21",
+  "po_reference": "PO-2026-200074",
+  "line_items": [
+    {
+      "description": "USB-C Charging Hubs 65W",
+      "qty": 4,
+      "unit_price": 29.99,
+      "amount": 119.96
+    },
+    {
+      "description": "Wireless Keyboard and Mouse Combo",
+      "qty": 1,
+      "unit_price": 39.5,
+      "amount": 39.5
+    }
+  ],
+  "tax": 13.16,
+  "total": 159.46,
+  "confidence": {
+    "overall": 1.0,
+    "fields": {
+      "invoice_number": 1.0,
+      "total": 1.0,
+      "vendor_name": 1.0,
+      "invoice_date": 1.0,
+      "po_reference": 1.0,
+      "line_items": 1.0,
+      "tax": 1.0
+    }
+  },
+  "source_file": "inv_100074.pdf",
+  "extraction_flags": []
+}

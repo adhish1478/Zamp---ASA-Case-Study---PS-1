@@ -1,0 +1,37 @@
+{
+  "invoice_id": "inv_100021",
+  "vendor_name": "Vivid Design Lab",
+  "invoice_number": "INV-2026-100021",
+  "invoice_date": "2026-03-14",
+  "po_reference": "PO-2026-200021",
+  "line_items": [
+    {
+      "description": "User Experience Consulting (Hours)",
+      "qty": 9.1,
+      "unit_price": 150.0,
+      "amount": 1365.0
+    },
+    {
+      "description": "User Testing Moderation & Recruiting",
+      "qty": 36.7,
+      "unit_price": 950.0,
+      "amount": 34865.0
+    }
+  ],
+  "tax": 2988.98,
+  "total": 39218.98,
+  "confidence": {
+    "overall": 1.0,
+    "fields": {
+      "invoice_number": 1.0,
+      "total": 1.0,
+      "vendor_name": 1.0,
+      "invoice_date": 1.0,
+      "po_reference": 1.0,
+      "line_items": 1.0,
+      "tax": 1.0
+    }
+  },
+  "source_file": "inv_100021.pdf",
+  "extraction_flags": []
+}

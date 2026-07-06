@@ -1,0 +1,49 @@
+{
+  "invoice_id": "inv_100066",
+  "vendor_name": "Nova Cloud Systems Inc.",
+  "invoice_number": "INV-2026-100066",
+  "invoice_date": "2026-05-25",
+  "po_reference": "PO-2026-200066",
+  "line_items": [
+    {
+      "description": "SSL Certificate Multi-Domain Renewal",
+      "qty": 20,
+      "unit_price": 89.99,
+      "amount": 1799.8
+    },
+    {
+      "description": "Premium Support Plan (Monthly)",
+      "qty": 15,
+      "unit_price": 499.0,
+      "amount": 7485.0
+    },
+    {
+      "description": "Database Storage Backup Service",
+      "qty": 6,
+      "unit_price": 45.5,
+      "amount": 273.0
+    },
+    {
+      "description": "Cloud Server Compute (m5.xlarge) - US East",
+      "qty": 9,
+      "unit_price": 120.0,
+      "amount": 1080.0
+    }
+  ],
+  "tax": 877.62,
+  "total": 11515.42,
+  "confidence": {
+    "overall": 1.0,
+    "fields": {
+      "invoice_number": 1.0,
+      "total": 1.0,
+      "vendor_name": 1.0,
+      "invoice_date": 1.0,
+      "po_reference": 1.0,
+      "line_items": 1.0,
+      "tax": 1.0
+    }
+  },
+  "source_file": "inv_100066.pdf",
+  "extraction_flags": []
+}

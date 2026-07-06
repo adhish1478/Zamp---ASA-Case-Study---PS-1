@@ -1,0 +1,31 @@
+{
+  "invoice_id": "inv_100061",
+  "vendor_name": "Apex Office Solutions Ltd.",
+  "invoice_number": "INV-2026-100061",
+  "invoice_date": "2026-01-08",
+  "po_reference": null,
+  "line_items": [
+    {
+      "description": "Breakroom Coffee and Tea Restock",
+      "qty": 5,
+      "unit_price": 75.0,
+      "amount": 375.0
+    }
+  ],
+  "tax": 30.94,
+  "total": 405.94,
+  "confidence": {
+    "overall": 1.0,
+    "fields": {
+      "invoice_number": 1.0,
+      "total": 1.0,
+      "vendor_name": 1.0,
+      "invoice_date": 1.0,
+      "po_reference": 1.0,
+      "line_items": 1.0,
+      "tax": 1.0
+    }
+  },
+  "source_file": "inv_100061.pdf",
+  "extraction_flags": []
+}

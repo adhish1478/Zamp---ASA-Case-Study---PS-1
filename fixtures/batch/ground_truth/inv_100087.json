@@ -1,0 +1,37 @@
+{
+  "invoice_id": "inv_100087",
+  "vendor_name": "Vivid Design Lab",
+  "invoice_number": "INV-2026-100087",
+  "invoice_date": "2026-01-08",
+  "po_reference": "PO-2026-200087",
+  "line_items": [
+    {
+      "description": "User Experience Consulting (Hours)",
+      "qty": 19.0,
+      "unit_price": 150.0,
+      "amount": 2850.0
+    },
+    {
+      "description": "Brand Identity Redesign Workshop",
+      "qty": 19.0,
+      "unit_price": 2500.0,
+      "amount": 47500.0
+    }
+  ],
+  "tax": 4153.88,
+  "total": 54503.88,
+  "confidence": {
+    "overall": 1.0,
+    "fields": {
+      "invoice_number": 1.0,
+      "total": 1.0,
+      "vendor_name": 1.0,
+      "invoice_date": 1.0,
+      "po_reference": 1.0,
+      "line_items": 1.0,
+      "tax": 1.0
+    }
+  },
+  "source_file": "inv_100087.pdf",
+  "extraction_flags": []
+}

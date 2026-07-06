@@ -1,0 +1,31 @@
+{
+  "invoice_id": "inv_over_tolerance",
+  "vendor_name": "Apex Office Solutions Ltd.",
+  "invoice_number": "INV-TOL-888",
+  "invoice_date": "2026-06-20",
+  "po_reference": "PO-TOL-2026-888",
+  "line_items": [
+    {
+      "description": "Executive Ergonomic Office Chairs",
+      "qty": 5,
+      "unit_price": 220.0,
+      "amount": 1100.0
+    }
+  ],
+  "tax": 100.0,
+  "total": 1200.0,
+  "confidence": {
+    "overall": 1.0,
+    "fields": {
+      "invoice_number": 1.0,
+      "total": 1.0,
+      "vendor_name": 1.0,
+      "invoice_date": 1.0,
+      "po_reference": 1.0,
+      "line_items": 1.0,
+      "tax": 1.0
+    }
+  },
+  "source_file": "amount_over_tolerance.pdf",
+  "extraction_flags": []
+}

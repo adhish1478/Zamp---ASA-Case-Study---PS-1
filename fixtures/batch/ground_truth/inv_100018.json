@@ -1,0 +1,37 @@
+{
+  "invoice_id": "inv_100018",
+  "vendor_name": "Nova Cloud Systems Inc.",
+  "invoice_number": "INV-2026-100018",
+  "invoice_date": "2026-05-31",
+  "po_reference": "PO-2026-200018",
+  "line_items": [
+    {
+      "description": "API Integration Gateway License",
+      "qty": 16,
+      "unit_price": 250.0,
+      "amount": 4000.0
+    },
+    {
+      "description": "Premium Support Plan (Monthly)",
+      "qty": 18,
+      "unit_price": 499.0,
+      "amount": 8982.0
+    }
+  ],
+  "tax": 1071.02,
+  "total": 14053.02,
+  "confidence": {
+    "overall": 1.0,
+    "fields": {
+      "invoice_number": 1.0,
+      "total": 1.0,
+      "vendor_name": 1.0,
+      "invoice_date": 1.0,
+      "po_reference": 1.0,
+      "line_items": 1.0,
+      "tax": 1.0
+    }
+  },
+  "source_file": "inv_100018.pdf",
+  "extraction_flags": []
+}

@@ -1,0 +1,43 @@
+{
+  "invoice_id": "inv_100071",
+  "vendor_name": "Beacon Software Advisory",
+  "invoice_number": "INV-2026-100071",
+  "invoice_date": "2026-05-24",
+  "po_reference": "PO-2026-200071",
+  "line_items": [
+    {
+      "description": "DevOps CI/CD Pipeline Audit (Hours)",
+      "qty": 24.9,
+      "unit_price": 150.0,
+      "amount": 3735.0
+    },
+    {
+      "description": "Solutions Architecture Review (Hours)",
+      "qty": 17.7,
+      "unit_price": 175.0,
+      "amount": 3097.5
+    },
+    {
+      "description": "Project Management & Coordination (Hours)",
+      "qty": 10.3,
+      "unit_price": 95.0,
+      "amount": 978.5
+    }
+  ],
+  "tax": 644.41,
+  "total": 8455.41,
+  "confidence": {
+    "overall": 1.0,
+    "fields": {
+      "invoice_number": 1.0,
+      "total": 1.0,
+      "vendor_name": 1.0,
+      "invoice_date": 1.0,
+      "po_reference": 1.0,
+      "line_items": 1.0,
+      "tax": 1.0
+    }
+  },
+  "source_file": "inv_100071.pdf",
+  "extraction_flags": []
+}

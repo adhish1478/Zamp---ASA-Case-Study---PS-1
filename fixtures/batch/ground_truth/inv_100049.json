@@ -1,0 +1,43 @@
+{
+  "invoice_id": "inv_100049",
+  "vendor_name": "Apex Office Solutions Ltd.",
+  "invoice_number": "INV-2026-100049",
+  "invoice_date": "2026-01-12",
+  "po_reference": "PO-2026-200049",
+  "line_items": [
+    {
+      "description": "LED Flat Panel Desk Lamps",
+      "qty": 19,
+      "unit_price": 42.5,
+      "amount": 807.5
+    },
+    {
+      "description": "Office Stationery and Paper Supplies",
+      "qty": 7,
+      "unit_price": 35.0,
+      "amount": 245.0
+    },
+    {
+      "description": "Breakroom Coffee and Tea Restock",
+      "qty": 19,
+      "unit_price": 75.0,
+      "amount": 1425.0
+    }
+  ],
+  "tax": 204.39,
+  "total": 2681.89,
+  "confidence": {
+    "overall": 1.0,
+    "fields": {
+      "invoice_number": 1.0,
+      "total": 1.0,
+      "vendor_name": 1.0,
+      "invoice_date": 1.0,
+      "po_reference": 1.0,
+      "line_items": 1.0,
+      "tax": 1.0
+    }
+  },
+  "source_file": "inv_100049.pdf",
+  "extraction_flags": []
+}

@@ -1,0 +1,43 @@
+{
+  "invoice_id": "inv_100013",
+  "vendor_name": "Apex Office Solutions Ltd.",
+  "invoice_number": "INV-2026-100013",
+  "invoice_date": "2026-03-28",
+  "po_reference": null,
+  "line_items": [
+    {
+      "description": "Breakroom Coffee and Tea Restock",
+      "qty": 13,
+      "unit_price": 75.0,
+      "amount": 975.0
+    },
+    {
+      "description": "Ergonomic Mesh Task Chairs",
+      "qty": 4,
+      "unit_price": 185.0,
+      "amount": 740.0
+    },
+    {
+      "description": "Document Shredding & Disposal Service",
+      "qty": 15,
+      "unit_price": 120.0,
+      "amount": 1800.0
+    }
+  ],
+  "tax": 289.99,
+  "total": 3804.99,
+  "confidence": {
+    "overall": 1.0,
+    "fields": {
+      "invoice_number": 1.0,
+      "total": 1.0,
+      "vendor_name": 1.0,
+      "invoice_date": 1.0,
+      "po_reference": 1.0,
+      "line_items": 1.0,
+      "tax": 1.0
+    }
+  },
+  "source_file": "inv_100013.pdf",
+  "extraction_flags": []
+}

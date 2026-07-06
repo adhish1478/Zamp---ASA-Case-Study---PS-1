@@ -1,0 +1,43 @@
+{
+  "invoice_id": "inv_100068",
+  "vendor_name": "Quantum Tech Wholesalers",
+  "invoice_number": "INV-2026-100068",
+  "invoice_date": "2026-05-19",
+  "po_reference": "PO-2026-200068",
+  "line_items": [
+    {
+      "description": "USB-C Charging Hubs 65W",
+      "qty": 17,
+      "unit_price": 29.99,
+      "amount": 509.83
+    },
+    {
+      "description": "Standard HDMI Cables 6ft (Pack of 10)",
+      "qty": 10,
+      "unit_price": 45.0,
+      "amount": 450.0
+    },
+    {
+      "description": "Privacy Screen Filters 14-inch",
+      "qty": 19,
+      "unit_price": 25.0,
+      "amount": 475.0
+    }
+  ],
+  "tax": 118.37,
+  "total": 1434.83,
+  "confidence": {
+    "overall": 1.0,
+    "fields": {
+      "invoice_number": 1.0,
+      "total": 1.0,
+      "vendor_name": 1.0,
+      "invoice_date": 1.0,
+      "po_reference": 1.0,
+      "line_items": 1.0,
+      "tax": 1.0
+    }
+  },
+  "source_file": "inv_100068.pdf",
+  "extraction_flags": []
+}

@@ -1,0 +1,37 @@
+{
+  "invoice_id": "inv_100030",
+  "vendor_name": "Nova Cloud Systems Inc.",
+  "invoice_number": "INV-2026-100030",
+  "invoice_date": "2026-03-06",
+  "po_reference": null,
+  "line_items": [
+    {
+      "description": "Cloud Server Compute (m5.xlarge) - US East",
+      "qty": 2,
+      "unit_price": 120.0,
+      "amount": 240.0
+    },
+    {
+      "description": "Database Storage Backup Service",
+      "qty": 20,
+      "unit_price": 45.5,
+      "amount": 910.0
+    }
+  ],
+  "tax": 94.88,
+  "total": 1244.88,
+  "confidence": {
+    "overall": 1.0,
+    "fields": {
+      "invoice_number": 1.0,
+      "total": 1.0,
+      "vendor_name": 1.0,
+      "invoice_date": 1.0,
+      "po_reference": 1.0,
+      "line_items": 1.0,
+      "tax": 1.0
+    }
+  },
+  "source_file": "inv_100030.pdf",
+  "extraction_flags": []
+}

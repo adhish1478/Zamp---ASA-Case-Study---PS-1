@@ -1,0 +1,37 @@
+{
+  "invoice_id": "inv_100046",
+  "vendor_name": "Global Telecom Services",
+  "invoice_number": "INV-2026-100046",
+  "invoice_date": "2026-04-08",
+  "po_reference": "PO-2026-200046",
+  "line_items": [
+    {
+      "description": "Dedicated Business IP Address Allocation",
+      "qty": 16,
+      "unit_price": 15.0,
+      "amount": 240.0
+    },
+    {
+      "description": "High-Speed Fiber Optic Internet 1Gbps",
+      "qty": 3,
+      "unit_price": 189.0,
+      "amount": 567.0
+    }
+  ],
+  "tax": 66.58,
+  "total": 873.58,
+  "confidence": {
+    "overall": 1.0,
+    "fields": {
+      "invoice_number": 1.0,
+      "total": 1.0,
+      "vendor_name": 1.0,
+      "invoice_date": 1.0,
+      "po_reference": 1.0,
+      "line_items": 1.0,
+      "tax": 1.0
+    }
+  },
+  "source_file": "inv_100046.pdf",
+  "extraction_flags": []
+}

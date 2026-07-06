@@ -1,0 +1,49 @@
+{
+  "invoice_id": "inv_100050",
+  "vendor_name": "Quantum Tech Wholesalers",
+  "invoice_number": "INV-2026-100050",
+  "invoice_date": "2026-03-23",
+  "po_reference": null,
+  "line_items": [
+    {
+      "description": "Gigabit Ethernet Switch 8-Port",
+      "qty": 9,
+      "unit_price": 55.0,
+      "amount": 495.0
+    },
+    {
+      "description": "Privacy Screen Filters 14-inch",
+      "qty": 16,
+      "unit_price": 25.0,
+      "amount": 400.0
+    },
+    {
+      "description": "USB-C Charging Hubs 65W",
+      "qty": 10,
+      "unit_price": 29.99,
+      "amount": 299.9
+    },
+    {
+      "description": "Wireless Keyboard and Mouse Combo",
+      "qty": 20,
+      "unit_price": 39.5,
+      "amount": 790.0
+    }
+  ],
+  "tax": 163.75,
+  "total": 1984.9,
+  "confidence": {
+    "overall": 1.0,
+    "fields": {
+      "invoice_number": 1.0,
+      "total": 1.0,
+      "vendor_name": 1.0,
+      "invoice_date": 1.0,
+      "po_reference": 1.0,
+      "line_items": 1.0,
+      "tax": 1.0
+    }
+  },
+  "source_file": "inv_100050.pdf",
+  "extraction_flags": []
+}

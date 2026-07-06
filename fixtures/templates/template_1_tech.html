@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Invoice {{ invoice_number }}</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        @page {
+            size: A4;
+            margin: 15mm;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #1f2937;
+            margin: 0;
+            padding: 0;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #2563eb;
+            padding-bottom: 20px;
+            margin-bottom: 25px;
+        }
+        .logo-area {
+            color: #2563eb;
+            font-size: 24px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .invoice-title {
+            text-align: right;
+        }
+        .invoice-title h1 {
+            font-size: 28px;
+            margin: 0;
+            color: #111827;
+            font-weight: 600;
+        }
+        .details-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+        .details-block h3 {
+            font-size: 11px;
+            color: #6b7280;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+            border-bottom: 1px solid #e5e7eb;
+            padding-bottom: 4px;
+        }
+        .details-block p {
+            margin: 3px 0;
+        }
+        .meta-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+            background-color: #f9fafb;
+            border: 1px solid #e5e7eb;
+        }
+        .meta-table th, .meta-table td {
+            padding: 10px 12px;
+            text-align: left;
+            border: 1px solid #e5e7eb;
+        }
+        .meta-table th {
+            font-size: 11px;
+            text-transform: uppercase;
+            color: #4b5563;
+            background-color: #f3f4f6;
+            font-weight: 600;
+        }
+        .items-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+        }
+        .items-table th, .items-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        .items-table th {
+            background-color: #2563eb;
+            color: white;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 11px;
+        }
+        .items-table td.num, .items-table th.num {
+            text-align: right;
+        }
+        .totals-section {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 20px;
+        }
+        .totals-table {
+            width: 300px;
+            border-collapse: collapse;
+        }
+        .totals-table td {
+            padding: 8px 12px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        .totals-table td.num {
+            text-align: right;
+            font-weight: 600;
+        }
+        .totals-table tr.grand-total {
+            font-size: 16px;
+            color: #2563eb;
+        }
+        .totals-table tr.grand-total td {
+            border-bottom: 2px solid #2563eb;
+            font-weight: 700;
+            background-color: #eff6ff;
+        }
+        .footer {
+            margin-top: 50px;
+            border-top: 1px solid #e5e7eb;
+            padding-top: 15px;
+            font-size: 11px;
+            color: #6b7280;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo-area">
+            {{ vendor_name }}
+        </div>
+        <div class="invoice-title">
+            <h1>INVOICE</h1>
+            <span style="color: #6b7280;">#{{ invoice_number }}</span>
+        </div>
+    </div>
+
+    <div class="details-grid">
+        <div class="details-block">
+            <h3>From</h3>
+            <p><strong>{{ vendor_name }}</strong></p>
+            <p>{{ vendor_address }}</p>
+            <p>Email: {{ vendor_email }}</p>
+        </div>
+        <div class="details-block">
+            <h3>Bill To</h3>
+            <p><strong>{{ client_name }}</strong></p>
+            <p>{{ client_address }}</p>
+        </div>
+    </div>
+
+    <table class="meta-table">
+        <thead>
+            <tr>
+                <th>Invoice Date</th>
+                <th>PO Number</th>
+                <th>Due Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{ invoice_date }}</td>
+                <td><strong>{{ po_reference if po_reference else 'N/A' }}</strong></td>
+                <td>{{ invoice_date }} (Due on Receipt)</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <table class="items-table">
+        <thead>
+            <tr>
+                <th>Description</th>
+                <th class="num" style="width: 80px;">Qty</th>
+                <th class="num" style="width: 120px;">Unit Price</th>
+                <th class="num" style="width: 120px;">Amount</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in line_items %}
+            <tr>
+                <td>{{ item.description }}</td>
+                <td class="num">{{ item.qty }}</td>
+                <td class="num">${{ "{:,.2f}".format(item.unit_price) }}</td>
+                <td class="num">${{ "{:,.2f}".format(item.amount) }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="totals-section">
+        <table class="totals-table">
+            <tr>
+                <td>Subtotal:</td>
+                <td class="num">${{ "{:,.2f}".format(total - (tax if tax else 0.0)) }}</td>
+            </tr>
+            {% if tax is not none and tax > 0 %}
+            <tr>
+                <td>Tax (VAT / Sales):</td>
+                <td class="num">${{ "{:,.2f}".format(tax) }}</td>
+            </tr>
+            {% endif %}
+            <tr class="grand-total">
+                <td>Total:</td>
+                <td class="num">${{ "{:,.2f}".format(total) }}</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="footer">
+        Thank you for your business. For any questions, please contact {{ vendor_email }}.
+    </div>
+</body>
+</html>

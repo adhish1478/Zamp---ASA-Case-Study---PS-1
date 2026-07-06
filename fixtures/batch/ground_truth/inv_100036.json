@@ -1,0 +1,49 @@
+{
+  "invoice_id": "inv_100036",
+  "vendor_name": "Nova Cloud Systems Inc.",
+  "invoice_number": "INV-2026-100036",
+  "invoice_date": "2026-05-08",
+  "po_reference": "PO-2026-200036",
+  "line_items": [
+    {
+      "description": "API Integration Gateway License",
+      "qty": 2,
+      "unit_price": 250.0,
+      "amount": 500.0
+    },
+    {
+      "description": "Data Warehousing Query Credits",
+      "qty": 7,
+      "unit_price": 0.15,
+      "amount": 1.05
+    },
+    {
+      "description": "Database Storage Backup Service",
+      "qty": 18,
+      "unit_price": 45.5,
+      "amount": 819.0
+    },
+    {
+      "description": "Premium Support Plan (Monthly)",
+      "qty": 19,
+      "unit_price": 499.0,
+      "amount": 9481.0
+    }
+  ],
+  "tax": 891.09,
+  "total": 11692.14,
+  "confidence": {
+    "overall": 1.0,
+    "fields": {
+      "invoice_number": 1.0,
+      "total": 1.0,
+      "vendor_name": 1.0,
+      "invoice_date": 1.0,
+      "po_reference": 1.0,
+      "line_items": 1.0,
+      "tax": 1.0
+    }
+  },
+  "source_file": "inv_100036.pdf",
+  "extraction_flags": []
+}

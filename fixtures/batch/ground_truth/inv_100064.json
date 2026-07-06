@@ -1,0 +1,43 @@
+{
+  "invoice_id": "inv_100064",
+  "vendor_name": "Global Telecom Services",
+  "invoice_number": "INV-2026-100064",
+  "invoice_date": "2026-02-22",
+  "po_reference": null,
+  "line_items": [
+    {
+      "description": "Dedicated Business IP Address Allocation",
+      "qty": 15,
+      "unit_price": 15.0,
+      "amount": 225.0
+    },
+    {
+      "description": "VoIP Phone Lines (5 Extension Bundle)",
+      "qty": 11,
+      "unit_price": 75.0,
+      "amount": 825.0
+    },
+    {
+      "description": "SMS Notification API Gateway Credits",
+      "qty": 4,
+      "unit_price": 0.02,
+      "amount": 0.08
+    }
+  ],
+  "tax": 86.63,
+  "total": 1136.71,
+  "confidence": {
+    "overall": 1.0,
+    "fields": {
+      "invoice_number": 1.0,
+      "total": 1.0,
+      "vendor_name": 1.0,
+      "invoice_date": 1.0,
+      "po_reference": 1.0,
+      "line_items": 1.0,
+      "tax": 1.0
+    }
+  },
+  "source_file": "inv_100064.pdf",
+  "extraction_flags": []
+}

@@ -1,0 +1,37 @@
+{
+  "invoice_id": "inv_100012",
+  "vendor_name": "Nova Cloud Systems Inc.",
+  "invoice_number": "INV-2026-100012",
+  "invoice_date": "2026-04-16",
+  "po_reference": "PO-2026-200012",
+  "line_items": [
+    {
+      "description": "Premium Support Plan (Monthly)",
+      "qty": 12,
+      "unit_price": 499.0,
+      "amount": 5988.0
+    },
+    {
+      "description": "Data Warehousing Query Credits",
+      "qty": 16,
+      "unit_price": 0.15,
+      "amount": 2.4
+    }
+  ],
+  "tax": 494.21,
+  "total": 6484.61,
+  "confidence": {
+    "overall": 1.0,
+    "fields": {
+      "invoice_number": 1.0,
+      "total": 1.0,
+      "vendor_name": 1.0,
+      "invoice_date": 1.0,
+      "po_reference": 1.0,
+      "line_items": 1.0,
+      "tax": 1.0
+    }
+  },
+  "source_file": "inv_100012.pdf",
+  "extraction_flags": []
+}

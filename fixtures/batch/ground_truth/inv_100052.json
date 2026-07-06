@@ -1,0 +1,31 @@
+{
+  "invoice_id": "inv_100052",
+  "vendor_name": "Global Telecom Services",
+  "invoice_number": "INV-2026-100052",
+  "invoice_date": "2026-01-04",
+  "po_reference": null,
+  "line_items": [
+    {
+      "description": "SMS Notification API Gateway Credits",
+      "qty": 17,
+      "unit_price": 0.02,
+      "amount": 0.34
+    }
+  ],
+  "tax": 0.03,
+  "total": 0.37,
+  "confidence": {
+    "overall": 1.0,
+    "fields": {
+      "invoice_number": 1.0,
+      "total": 1.0,
+      "vendor_name": 1.0,
+      "invoice_date": 1.0,
+      "po_reference": 1.0,
+      "line_items": 1.0,
+      "tax": 1.0
+    }
+  },
+  "source_file": "inv_100052.pdf",
+  "extraction_flags": []
+}

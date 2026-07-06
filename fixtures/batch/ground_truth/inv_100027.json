@@ -1,0 +1,43 @@
+{
+  "invoice_id": "inv_100027",
+  "vendor_name": "Vivid Design Lab",
+  "invoice_number": "INV-2026-100027",
+  "invoice_date": "2026-06-23",
+  "po_reference": "PO-2026-200027",
+  "line_items": [
+    {
+      "description": "User Testing Moderation & Recruiting",
+      "qty": 5.1,
+      "unit_price": 950.0,
+      "amount": 4845.0
+    },
+    {
+      "description": "Digital Interface Styleguide Development",
+      "qty": 32.4,
+      "unit_price": 1200.0,
+      "amount": 38880.0
+    },
+    {
+      "description": "User Experience Consulting (Hours)",
+      "qty": 22.0,
+      "unit_price": 150.0,
+      "amount": 3300.0
+    }
+  ],
+  "tax": 3879.56,
+  "total": 50904.56,
+  "confidence": {
+    "overall": 1.0,
+    "fields": {
+      "invoice_number": 1.0,
+      "total": 1.0,
+      "vendor_name": 1.0,
+      "invoice_date": 1.0,
+      "po_reference": 1.0,
+      "line_items": 1.0,
+      "tax": 1.0
+    }
+  },
+  "source_file": "inv_100027.pdf",
+  "extraction_flags": []
+}

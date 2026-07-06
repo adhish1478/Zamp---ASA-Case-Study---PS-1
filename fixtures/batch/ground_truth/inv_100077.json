@@ -1,0 +1,31 @@
+{
+  "invoice_id": "inv_100077",
+  "vendor_name": "Beacon Software Advisory",
+  "invoice_number": "INV-2026-100077",
+  "invoice_date": "2026-05-13",
+  "po_reference": null,
+  "line_items": [
+    {
+      "description": "Solutions Architecture Review (Hours)",
+      "qty": 24.8,
+      "unit_price": 175.0,
+      "amount": 4340.0
+    }
+  ],
+  "tax": 358.05,
+  "total": 4698.05,
+  "confidence": {
+    "overall": 1.0,
+    "fields": {
+      "invoice_number": 1.0,
+      "total": 1.0,
+      "vendor_name": 1.0,
+      "invoice_date": 1.0,
+      "po_reference": 1.0,
+      "line_items": 1.0,
+      "tax": 1.0
+    }
+  },
+  "source_file": "inv_100077.pdf",
+  "extraction_flags": []
+}

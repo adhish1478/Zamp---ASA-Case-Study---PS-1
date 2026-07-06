@@ -1,0 +1,37 @@
+{
+  "invoice_id": "inv_100044",
+  "vendor_name": "Quantum Tech Wholesalers",
+  "invoice_number": "INV-2026-100044",
+  "invoice_date": "2026-06-11",
+  "po_reference": "PO-2026-200044",
+  "line_items": [
+    {
+      "description": "Standard HDMI Cables 6ft (Pack of 10)",
+      "qty": 14,
+      "unit_price": 45.0,
+      "amount": 630.0
+    },
+    {
+      "description": "Wireless Keyboard and Mouse Combo",
+      "qty": 19,
+      "unit_price": 39.5,
+      "amount": 750.5
+    }
+  ],
+  "tax": 113.89,
+  "total": 1380.5,
+  "confidence": {
+    "overall": 1.0,
+    "fields": {
+      "invoice_number": 1.0,
+      "total": 1.0,
+      "vendor_name": 1.0,
+      "invoice_date": 1.0,
+      "po_reference": 1.0,
+      "line_items": 1.0,
+      "tax": 1.0
+    }
+  },
+  "source_file": "inv_100044.pdf",
+  "extraction_flags": []
+}

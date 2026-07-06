@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Invoice {{ invoice_number }}</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&display=swap');
+        @page {
+            size: A4;
+            margin: 20mm;
+        }
+        body {
+            font-family: 'Outfit', sans-serif;
+            color: #2d3748;
+            margin: 0;
+            padding: 0;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 50px;
+        }
+        .vendor-details h1 {
+            font-size: 20px;
+            font-weight: 600;
+            margin: 0 0 10px 0;
+            color: #1a202c;
+            letter-spacing: -0.5px;
+        }
+        .vendor-details p {
+            margin: 2px 0;
+            color: #718096;
+        }
+        .invoice-details {
+            text-align: right;
+        }
+        .invoice-details h2 {
+            font-size: 32px;
+            font-weight: 300;
+            margin: 0 0 10px 0;
+            color: #2d3748;
+            letter-spacing: -1px;
+            text-transform: uppercase;
+        }
+        .details-grid {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 40px;
+            border-bottom: 1px solid #edf2f7;
+            padding-bottom: 30px;
+        }
+        .billing-to {
+            width: 50%;
+        }
+        .billing-to h4 {
+            font-size: 10px;
+            color: #a0aec0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin: 0 0 10px 0;
+        }
+        .billing-to p {
+            margin: 3px 0;
+        }
+        .invoice-meta-info {
+            width: 40%;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+        .meta-row {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            margin-bottom: 6px;
+        }
+        .meta-label {
+            color: #718096;
+            font-size: 12px;
+        }
+        .meta-val {
+            font-weight: 500;
+            color: #2d3748;
+            text-align: right;
+        }
+        .items-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 40px;
+        }
+        .items-table th {
+            text-align: left;
+            padding: 10px 0;
+            border-bottom: 2px solid #2d3748;
+            font-weight: 500;
+            color: #1a202c;
+            text-transform: uppercase;
+            font-size: 11px;
+            letter-spacing: 0.5px;
+        }
+        .items-table td {
+            padding: 15px 0;
+            border-bottom: 1px solid #edf2f7;
+            color: #4a5568;
+        }
+        .items-table td.num, .items-table th.num {
+            text-align: right;
+        }
+        .summary-wrapper {
+            display: flex;
+            justify-content: flex-end;
+        }
+        .summary-box {
+            width: 320px;
+        }
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #f7fafc;
+        }
+        .summary-row.total-row {
+            border-top: 2px solid #2d3748;
+            border-bottom: none;
+            padding-top: 15px;
+            font-size: 18px;
+            font-weight: 600;
+            color: #1a202c;
+        }
+        .footer-note {
+            margin-top: 80px;
+            border-top: 1px solid #edf2f7;
+            padding-top: 20px;
+            color: #a0aec0;
+            font-size: 11px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="vendor-details">
+                <h1>{{ vendor_name }}</h1>
+                <p>{{ vendor_address }}</p>
+                <p>Contact: {{ vendor_email }}</p>
+            </div>
+            <div class="invoice-details">
+                <h2>Invoice</h2>
+                <p style="margin: 0; color: #718096;">#{{ invoice_number }}</p>
+            </div>
+        </div>
+
+        <div class="details-grid">
+            <div class="billing-to">
+                <h4>Billed To</h4>
+                <p><strong>{{ client_name }}</strong></p>
+                <p>{{ client_address }}</p>
+            </div>
+            <div class="invoice-meta-info">
+                <div class="meta-row">
+                    <span class="meta-label">Date Issued</span>
+                    <span class="meta-val">{{ invoice_date }}</span>
+                </div>
+                <div class="meta-row">
+                    <span class="meta-label">PO Reference</span>
+                    <span class="meta-val"><strong>{{ po_reference if po_reference else 'N/A' }}</strong></span>
+                </div>
+                <div class="meta-row">
+                    <span class="meta-label">Payment Terms</span>
+                    <span class="meta-val">Net 30</span>
+                </div>
+            </div>
+        </div>
+
+        <table class="items-table">
+            <thead>
+                <tr>
+                    <th>Description</th>
+                    <th class="num" style="width: 80px;">Quantity</th>
+                    <th class="num" style="width: 120px;">Price</th>
+                    <th class="num" style="width: 120px;">Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in line_items %}
+                <tr>
+                    <td>{{ item.description }}</td>
+                    <td class="num">{{ item.qty }}</td>
+                    <td class="num">${{ "{:,.2f}".format(item.unit_price) }}</td>
+                    <td class="num">${{ "{:,.2f}".format(item.amount) }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="summary-wrapper">
+            <div class="summary-box">
+                <div class="summary-row">
+                    <span style="color: #718096;">Subtotal</span>
+                    <span style="font-weight: 500;">${{ "{:,.2f}".format(total - (tax if tax else 0.0)) }}</span>
+                </div>
+                {% if tax is not none and tax > 0 %}
+                <div class="summary-row">
+                    <span style="color: #718096;">Tax</span>
+                    <span style="font-weight: 500;">${{ "{:,.2f}".format(tax) }}</span>
+                </div>
+                {% endif %}
+                <div class="summary-row total-row">
+                    <span>Total Due</span>
+                    <span>${{ "{:,.2f}".format(total) }}</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-note">
+            Electronic Invoice. Payment can be settled via ACH Transfer. If there are any discrepancies, please notify within 10 days of issue.
+        </div>
+    </div>
+</body>
+</html>

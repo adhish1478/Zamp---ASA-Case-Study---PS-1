@@ -1,0 +1,37 @@
+{
+  "invoice_id": "inv_100072",
+  "vendor_name": "Nova Cloud Systems Inc.",
+  "invoice_number": "INV-2026-100072",
+  "invoice_date": "2026-05-08",
+  "po_reference": "PO-2026-200072",
+  "line_items": [
+    {
+      "description": "Data Warehousing Query Credits",
+      "qty": 14,
+      "unit_price": 0.15,
+      "amount": 2.1
+    },
+    {
+      "description": "API Integration Gateway License",
+      "qty": 1,
+      "unit_price": 250.0,
+      "amount": 250.0
+    }
+  ],
+  "tax": 20.8,
+  "total": 272.9,
+  "confidence": {
+    "overall": 1.0,
+    "fields": {
+      "invoice_number": 1.0,
+      "total": 1.0,
+      "vendor_name": 1.0,
+      "invoice_date": 1.0,
+      "po_reference": 1.0,
+      "line_items": 1.0,
+      "tax": 1.0
+    }
+  },
+  "source_file": "inv_100072.pdf",
+  "extraction_flags": []
+}

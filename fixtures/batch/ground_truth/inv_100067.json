@@ -1,0 +1,37 @@
+{
+  "invoice_id": "inv_100067",
+  "vendor_name": "Apex Office Solutions Ltd.",
+  "invoice_number": "INV-2026-100067",
+  "invoice_date": "2026-05-11",
+  "po_reference": "PO-2026-200067",
+  "line_items": [
+    {
+      "description": "Document Shredding & Disposal Service",
+      "qty": 10,
+      "unit_price": 120.0,
+      "amount": 1200.0
+    },
+    {
+      "description": "Office Stationery and Paper Supplies",
+      "qty": 9,
+      "unit_price": 35.0,
+      "amount": 315.0
+    }
+  ],
+  "tax": 124.99,
+  "total": 1639.99,
+  "confidence": {
+    "overall": 1.0,
+    "fields": {
+      "invoice_number": 1.0,
+      "total": 1.0,
+      "vendor_name": 1.0,
+      "invoice_date": 1.0,
+      "po_reference": 1.0,
+      "line_items": 1.0,
+      "tax": 1.0
+    }
+  },
+  "source_file": "inv_100067.pdf",
+  "extraction_flags": []
+}

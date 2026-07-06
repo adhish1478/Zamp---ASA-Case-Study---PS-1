@@ -1,0 +1,43 @@
+{
+  "invoice_id": "inv_100043",
+  "vendor_name": "Apex Office Solutions Ltd.",
+  "invoice_number": "INV-2026-100043",
+  "invoice_date": "2026-06-10",
+  "po_reference": "PO-2026-200043",
+  "line_items": [
+    {
+      "description": "Office Stationery and Paper Supplies",
+      "qty": 14,
+      "unit_price": 35.0,
+      "amount": 490.0
+    },
+    {
+      "description": "Document Shredding & Disposal Service",
+      "qty": 20,
+      "unit_price": 120.0,
+      "amount": 2400.0
+    },
+    {
+      "description": "Ergonomic Mesh Task Chairs",
+      "qty": 14,
+      "unit_price": 185.0,
+      "amount": 2590.0
+    }
+  ],
+  "tax": 452.1,
+  "total": 5932.1,
+  "confidence": {
+    "overall": 1.0,
+    "fields": {
+      "invoice_number": 1.0,
+      "total": 1.0,
+      "vendor_name": 1.0,
+      "invoice_date": 1.0,
+      "po_reference": 1.0,
+      "line_items": 1.0,
+      "tax": 1.0
+    }
+  },
+  "source_file": "inv_100043.pdf",
+  "extraction_flags": []
+}
