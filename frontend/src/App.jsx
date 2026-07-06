@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:8000";
+const API_BASE = import.meta.env.DEV ? "http://localhost:8000" : (import.meta.env.VITE_API_URL || "");
 
 export default function App() {
   const [invoices, setInvoices] = useState([]);
