@@ -33,6 +33,7 @@ htmlcov/
 # PDF & MD files
 *.pdf
 *.md
+!README.md
 
 # Allow tracking all files inside fixtures directory
 !fixtures/**
