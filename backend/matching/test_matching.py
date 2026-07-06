@@ -118,7 +118,7 @@ class TestPOMatchingEngine(unittest.TestCase):
         print(f"no_po_reference explanation: {decision['explanation']}")
         
         self.assertEqual(decision["status"], "flagged_for_review")
-        self.assertIn("missing_po_reference", decision["rule_trace"])
+        self.assertIn("no_matching_po_number", decision["rule_trace"])
         self.assertTrue(decision["requires_human_review"])
 
     def test_duplicate_invoice_rejection(self):
