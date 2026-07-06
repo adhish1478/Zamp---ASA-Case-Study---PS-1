@@ -517,15 +517,6 @@ export default function App() {
             <span className="font-label-md">Suppliers</span>
           </button>
         </nav>
-        <div className="mt-auto border-t border-outline-variant pt-4 px-3 flex items-center gap-3">
-          <div className="w-8 h-8 rounded-full overflow-hidden bg-slate-200 flex items-center justify-center font-bold text-slate-600 text-xs">
-            AR
-          </div>
-          <div>
-            <p className="text-label-md font-semibold text-on-surface">Alex Rivera</p>
-            <p className="text-[10px] text-on-surface-variant uppercase tracking-wider">Sr. Auditor</p>
-          </div>
-        </div>
       </aside>
 
       {/* Main Content Shell */}
@@ -1205,11 +1196,11 @@ export default function App() {
                         {showAllPos ? "Show matching only" : "Search all POs"}
                       </span>
                     </div>
-                    <div className="flex gap-2">
+                    <div className="flex gap-2 min-w-0 w-full">
                       <select
                         value={editPoRef}
                         onChange={(e) => setEditPoRef(e.target.value)}
-                        className="flex-1 h-8 px-2 border border-slate-200 rounded bg-white text-xs font-semibold"
+                        className="flex-1 h-8 px-2 border border-slate-200 rounded bg-white text-xs font-semibold min-w-0 w-0"
                       >
                         <option value="">-- Select PO --</option>
                         {purchaseOrders
